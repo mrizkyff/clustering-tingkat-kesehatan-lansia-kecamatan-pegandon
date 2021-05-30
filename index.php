@@ -34,10 +34,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="index.php">Dataset</a>
+          <a class="nav-link active" aria-current="page" href="index.php">Dataset</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="klastering.php">Hasil Klastering</a>
+          <a class="nav-link" href="core/kmeans.php">Hasil Klastering</a>
         </li>
       </ul>
     </div>
@@ -51,20 +51,20 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
         <a href="#" class="btn btn-sm btn-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#modalTambah"> <i class="fas fa-plus    "></i> Tambah Data Baru</a>
         <table class="table table-bordered table-striped table-sm table-hover" style="margin-top: 50px;">
             <tr>
-                <th>No</th>
-                <th>Nama Desa</th>
-                <th>Ggn. Mental</th>
-                <th>IMT</th>
-                <th>Tek. Darah</th>
-                <th>Hb. Kurang</th>
-                <th>Kolesterol</th>
-                <th>Diabetes M</th>
-                <th>As. Urat</th>
-                <th>Ggn. Ginjal</th>
-                <th>Ggn. Kognitif</th>
-                <th>Ggn. Pengelihatan</th>
-                <th>Ggn. Pendengaran</th>
-                <th>Aksi</th>
+                <th class="text-center" >No</th>
+                <th class="text-center" >Nama Desa</th>
+                <th class="text-center" >Ggn. Mental</th>
+                <th class="text-center" >IMT</th>
+                <th class="text-center" >Tek. Darah</th>
+                <th class="text-center" >Hb. Kurang</th>
+                <th class="text-center" >Kolesterol</th>
+                <th class="text-center" >Diabetes Melitus</th>
+                <th class="text-center" >As. Urat</th>
+                <th class="text-center" >Ggn. Ginjal</th>
+                <th class="text-center" >Ggn. Kognitif</th>
+                <th class="text-center" >Ggn. Pengelihatan</th>
+                <th class="text-center" >Ggn. Pendengaran</th>
+                <th class="text-center"  width="160px;">Aksi</th>
             </tr>
             <?php  
             $no = 1;
@@ -85,7 +85,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
                <td class='text-center'><?=$user_data['kognitif']?></td>
                <td class='text-center'><?=$user_data['pengelihatan']?></td>
                <td class='text-center'><?=$user_data['pendengaran']?></td>
-               <td width='130px;'><button class='btn btn-sm btn-warning' data-bs-toggle='modal' data-bs-target='#modalEdit<?= $user_data['id']?>'>Edit</button> | <form class='d-inline' method='POST' action='core/crud.php'> <input type='hidden' name='id_hapus' value='<?= $user_data["id"] ?>'> <input type='submit' name='Delete' value='Delete' class='btn btn-danger btn-sm'></form></td>
+               <td width='130px;'><button class='btn btn-sm btn-warning' data-bs-toggle='modal' data-bs-target='#modalEdit<?= $user_data['id']?>'><i class="fas fa-pencil    "></i> Edit</button> | <form class='d-inline' method='POST' action='core/crud.php'> <input type='hidden' name='id_hapus' value='<?= $user_data["id"] ?>'> <button type='submit' name='Delete' value='Delete' class='btn btn-danger btn-sm'><i class="fas fa-trash    "></i> Delete</button></form></td>
                 <!-- modal edit data -->
                 <div class="modal fade" id="modalEdit<?= $user_data['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -178,51 +178,51 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
                 <form action="core/crud.php" method="POST">
                     <div class="form-group">
                         <label for="nama_desa">Nama Desa</label>
-                        <input class="form-control form-control-sm" type="text" name="nama_desa">
+                        <input class="form-control form-control-sm" type="text" name="nama_desa" required>
                     </div>  
                     <div class="form-group">
                         <label for="mental">Gangguan Mental</label>
-                        <input class="form-control form-control-sm" type="number" name="mental">
+                        <input class="form-control form-control-sm" type="number" name="mental" required>
                     </div>  
                     <div class="form-group">
                         <label for="imt">IMT</label>
-                        <input class="form-control form-control-sm" type="number" name="imt">
+                        <input class="form-control form-control-sm" type="number" name="imt" required>
                     </div>  
                     <div class="form-group">
                         <label for="tek_darah">Tekanan Darah</label>
-                        <input class="form-control form-control-sm" type="number" name="tek_darah">
+                        <input class="form-control form-control-sm" type="number" name="tek_darah" required>
                     </div>  
                     <div class="form-group">
                         <label for="hb_kurang">Hb Kurang</label>
-                        <input class="form-control form-control-sm" type="number" name="hb_kurang">
+                        <input class="form-control form-control-sm" type="number" name="hb_kurang" required>
                     </div>  
                     <div class="form-group">
                         <label for="kolesterol">Koleseterol</label>
-                        <input class="form-control form-control-sm" type="number" name="kolesterol">
+                        <input class="form-control form-control-sm" type="number" name="kolesterol" required>
                     </div>  
                     <div class="form-group">
                         <label for="dm">Diabetes Melitus</label>
-                        <input class="form-control form-control-sm" type="number" name="dm">
+                        <input class="form-control form-control-sm" type="number" name="dm" required>
                     </div>  
                     <div class="form-group">
                         <label for="as_urat">Asam Urat</label>
-                        <input class="form-control form-control-sm" type="number" name="as_urat">
+                        <input class="form-control form-control-sm" type="number" name="as_urat" required>
                     </div>  
                     <div class="form-group">
                         <label for="ginjal">Gangguan Ginjal</label>
-                        <input class="form-control form-control-sm" type="number" name="ginjal">
+                        <input class="form-control form-control-sm" type="number" name="ginjal" required>
                     </div>  
                     <div class="form-group">
                         <label for="kognitif">Gangguan Kognitif</label>
-                        <input class="form-control form-control-sm" type="number" name="kognitif">
+                        <input class="form-control form-control-sm" type="number" name="kognitif" required>
                     </div>  
                     <div class="form-group">
                         <label for="pengelihatan">Gangguan Pengelihatan</label>
-                        <input class="form-control form-control-sm" type="number" name="pengelihatan">
+                        <input class="form-control form-control-sm" type="number" name="pengelihatan" required>
                     </div>  
                     <div class="form-group">
                         <label for="pendengaran">Gangguan Pendengaran</label>
-                        <input class="form-control form-control-sm" type="number" name="pendengaran">
+                        <input class="form-control form-control-sm" type="number" name="pendengaran" required>
                     </div>  
             </div>
             <div class="modal-footer">

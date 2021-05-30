@@ -37,7 +37,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY cluster ASC");
           <a class="nav-link" aria-current="page" href="index.php">Dataset</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="klastering.php">Hasil Klastering</a>
+          <a class="nav-link active" href="core/kmeans.php">Hasil Klastering</a>
         </li>
       </ul>
     </div>
