@@ -110,7 +110,7 @@ function hitung_centroid($array_data, $cluster){
     foreach ($sum as $key => $value) {
         $means[$key] = ($n == 0) ? 1 : $value / $n;
     }
-    print_r($means);
+    return $means;
 
 }
 
@@ -136,18 +136,37 @@ function hitung_euclidean($array_data){
     $cluster3 = $hasil_clustering['cluster3'];
 
     // iterasi 2 dan seterusnya
-    $centroid1_baru = hitung_centroid($array_data, $cluster2);
+    
 
     $x = 2;
     do{
 
         // menghitung centroid baru dengan means (rata-rat)
-
+        $centroid1_baru = hitung_centroid($array_data, $cluster1);
+        $centroid2_baru = hitung_centroid($array_data, $cluster2);
+        $centroid3_baru = hitung_centroid($array_data, $cluster3);
+    
+        // menghtiung jarak cluster dari centroid yang baru
+        $jarak1_baru = euclidean_distance($array_data, $centroid1_baru);
+        $jarak2_baru = euclidean_distance($array_data, $centroid2_baru);
+        $jarak3_baru = euclidean_distance($array_data, $centroid3_baru);
+    
+        // membagi cluster lagi
+        $hasil_clustering_baru = bagi_cluster($jarak1_baru, $jarak2_baru, $jarak3_baru);
+    
+        // anggota setiap cluster
+        $cluster1_baru = $hasil_clustering_baru['cluster1'];
+        $cluster2_baru = $hasil_clustering_baru['cluster2'];
+        $cluster3_baru = $hasil_clustering_baru['cluster3'];
+    
+        print_r(['============= iterasi ke' => $x]);
+        print_r($cluster1_baru);
+        print_r($cluster2_baru);
+        print_r($cluster3_baru);
         $x += 1;
-        // if($x == 10){
-        //     break;
-        // }
-        // print($x);
-    } while($x < 10);
+        if($x == 10){
+            break;
+        }
+    } while(($hasil_clustering === $hasil_clustering_baru) != 1);
 }
 ?>
