@@ -34,13 +34,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Dataset</a>
+          <a class="nav-link" aria-current="page" href="index.php">Dataset</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Hasil Klastering</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Edit Data</a>
+          <a class="nav-link active" href="klastering.php">Hasil Klastering</a>
         </li>
       </ul>
     </div>
@@ -50,7 +47,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
  
     <div class="container mt-5 ">
         <h1 class="text-center mb-3">Tabel Tingkat Penyakit Lansia Kecamatan Pegandon 2018-2019</h1>
-        <a href="core/kmeans.php" class="btn btn-sm btn-primary" style="float:right; margin-left: 10px;" ><i class="fas fa-cogs    "></i> Clustering!</a>
+        <a href="core/kmeans.php" class="btn btn-sm btn-primary" style="float:right; margin-left: 10px;" ><i class="fas fa-cogs"></i> Clustering!</a>
         <a href="#" class="btn btn-sm btn-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#modalTambah"> <i class="fas fa-plus    "></i> Tambah Data Baru</a>
         <table class="table table-bordered table-striped table-sm table-hover" style="margin-top: 50px;">
             <tr>

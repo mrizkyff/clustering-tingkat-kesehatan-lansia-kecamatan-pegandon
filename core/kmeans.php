@@ -202,7 +202,8 @@ foreach ($array_cluster as $id => $cluster) {
         echo 'error!';
     }
 }
-// print_r($array_cluster);
+
+header("Location:../klastering.php");
 ?>
 
 

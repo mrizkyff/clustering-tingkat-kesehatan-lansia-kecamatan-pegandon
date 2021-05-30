@@ -3,7 +3,7 @@
 include_once("core/config.php");
  
 // Fetch all users data from database
-$result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
+$result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY cluster ASC");
 ?>
  
 <html>
@@ -34,13 +34,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Dataset</a>
+          <a class="nav-link" aria-current="page" href="index.php">Dataset</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Hasil Klastering</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Edit Data</a>
+          <a class="nav-link active" href="klastering.php">Hasil Klastering</a>
         </li>
       </ul>
     </div>
@@ -49,9 +46,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
 <!-- navigation bar -->
  
     <div class="container mt-5 ">
-        <h1 class="text-center mb-3">Tabel Tingkat Penyakit Lansia Kecamatan Pegandon 2018-2019</h1>
-        <a href="core/kmeans.php" class="btn btn-sm btn-primary" style="float:right; margin-left: 10px;" ><i class="fas fa-cogs    "></i> Clustering!</a>
-        <a href="#" class="btn btn-sm btn-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#modalTambah"> <i class="fas fa-plus    "></i> Tambah Data Baru</a>
+        <h1 class="text-center mb-3">Hasil Clustering Tingkat Kesehatan Lansia Kecamatan Pegandon 2018-2019</h1>
         <table class="table table-bordered table-striped table-sm table-hover" style="margin-top: 50px;">
             <tr>
                 <th>No</th>
@@ -67,7 +62,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
                 <th>Ggn. Kognitif</th>
                 <th>Ggn. Pengelihatan</th>
                 <th>Ggn. Pendengaran</th>
-                <th>Aksi</th>
+                <th>Cluster</th>
             </tr>
             <?php  
             $no = 1;
@@ -88,7 +83,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
                <td class='text-center'><?=$user_data['kognitif']?></td>
                <td class='text-center'><?=$user_data['pengelihatan']?></td>
                <td class='text-center'><?=$user_data['pendengaran']?></td>
-               <td width='130px;'><button class='btn btn-sm btn-warning' data-bs-toggle='modal' data-bs-target='#modalEdit<?= $user_data['id']?>'>Edit</button> | <form class='d-inline' method='POST' action='core/crud.php'> <input type='hidden' name='id_hapus' value='<?= $user_data["id"] ?>'> <input type='submit' name='Delete' value='Delete' class='btn btn-danger btn-sm'></form></td>
+               <td class='text-center'><?=$user_data['cluster']?></td>
             </tr>
             <?php   
                 $no += 1;
