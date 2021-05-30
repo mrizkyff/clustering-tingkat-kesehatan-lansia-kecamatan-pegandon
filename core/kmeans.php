@@ -26,9 +26,6 @@ foreach ($all_data as $key => $value) {
     $array_data[$value[0]] = $data;
 }
 
-// print_r($array_data);
-// print_r(euclidean_distance($array_data[1], $array_data[8]));
-hitung_euclidean($array_data);
 
 // perhitungan euclidean distance
 function euclidean_distance($array_data, $centroid){
@@ -115,7 +112,7 @@ function hitung_centroid($array_data, $cluster){
 }
 
 // perhitungan euclidean terhadap seluruh data
-function hitung_euclidean($array_data){
+function hitung_kmeans($array_data){
     // menentukan cetroid awal untuk iterasi 1
     $c1 = 6;
     $c2 = 8;
@@ -135,10 +132,10 @@ function hitung_euclidean($array_data){
     $cluster2 = $hasil_clustering['cluster2'];
     $cluster3 = $hasil_clustering['cluster3'];
 
-    print_r(['============= iterasi ke 1 =============']);
-    print_r($cluster1);
-    print_r($cluster2);
-    print_r($cluster3);
+    // print_r(['============= iterasi ke 1 =============']);
+    // print_r($cluster1);
+    // print_r($cluster2);
+    // print_r($cluster3);
     
     // iterasi 2 dan seterusnya
     $x = 2;
@@ -162,10 +159,10 @@ function hitung_euclidean($array_data){
         $cluster2_baru = $hasil_clustering_baru['cluster2'];
         $cluster3_baru = $hasil_clustering_baru['cluster3'];
 
-        print_r(['============= iterasi ke' => $x]);
-        print_r($cluster1_baru);
-        print_r($cluster2_baru);
-        print_r($cluster3_baru);
+        // print_r(['============= iterasi ke' => $x]);
+        // print_r($cluster1_baru);
+        // print_r($cluster2_baru);
+        // print_r($cluster3_baru);
         if(($hasil_clustering === $hasil_clustering_baru) != 1){
             $hasil_clustering = $hasil_clustering_baru;
         }
@@ -173,7 +170,39 @@ function hitung_euclidean($array_data){
             break;
         }
         $x += 1;
+    }
+    return $hasil_clustering;
+}
 
+// kumpulkan seluruh cluster untuk updating cluster database
+$array_cluster = [];
+$hasil_akhir = hitung_kmeans($array_data);
+foreach ($hasil_akhir as $key => $value) {
+    if($key == 'cluster1'){
+        foreach ($value as $key1 => $value1) {
+            $array_cluster[$value1] = 1;
+        }
+    }
+    else if($key == 'cluster2'){
+        foreach ($value as $key1 => $value1) {
+            $array_cluster[$value1] = 2;
+        }
+    }
+    else if($key == 'cluster3'){
+        foreach ($value as $key1 => $value1) {
+            $array_cluster[$value1] = 3;
+        }
     }
 }
+
+// proses update ke database
+foreach ($array_cluster as $id => $cluster) {
+    $result = mysqli_query($mysqli, "UPDATE penyakit SET cluster='$cluster' WHERE id=$id");
+    if(!$result){
+        echo 'error!';
+    }
+}
+// print_r($array_cluster);
 ?>
+
+

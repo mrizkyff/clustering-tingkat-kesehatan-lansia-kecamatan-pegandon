@@ -8,7 +8,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
  
 <html>
 <head>    
-    <title>Homepage</title>
+    <title>Dataset</title>
     <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">

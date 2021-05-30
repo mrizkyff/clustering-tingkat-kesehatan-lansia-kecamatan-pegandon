@@ -66,7 +66,12 @@ include_once("config.php");
             $result = mysqli_query($mysqli, "UPDATE penyakit SET nama_desa='$nama_desa',mental='$mental',imt='$imt',tek_darah='$tek_darah',hb_kurang='$hb_kurang',kolesterol='$kolesterol',dm='$dm',asam_urat='$as_urat',ginjal='$ginjal',kognitif='$kognitif',pengelihatan='$pengelihatan',pendengaran='$pendengaran' WHERE id=$id");
             
             // Redirect to homepage to display updated user in list
-            header("Location: ../index.php");
+            if($result){
+                header("Location:../index.php");
+            }
+            else{
+                echo 'error!';
+            }
 
             // return $result;
 
