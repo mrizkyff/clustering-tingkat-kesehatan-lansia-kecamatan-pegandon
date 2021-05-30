@@ -48,7 +48,7 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
 </nav>
 <!-- navigation bar -->
  
-    <div class="container">
+    <div class="container mt-5 ">
         <h1 class="text-center mb-3">Tabel Tingkat Penyakit Lansia Kecamatan Pegandon 2018-2019</h1>
         <a href="core/kmeans.php" class="btn btn-sm btn-primary" style="float:right; margin-left: 10px;" ><i class="fas fa-cogs    "></i> Clustering!</a>
         <a href="#" class="btn btn-sm btn-success" style="float: right;" data-bs-toggle="modal" data-bs-target="#modalTambah"> <i class="fas fa-plus    "></i> Tambah Data Baru</a>
@@ -72,24 +72,97 @@ $result = mysqli_query($mysqli, "SELECT * FROM penyakit ORDER BY id ASC");
             <?php  
             $no = 1;
             while($user_data = mysqli_fetch_array($result)) {         
-                echo "<tr>";
-                echo "<td class='text-center'>".$no."</td>";
-                echo "<td >".$user_data['nama_desa']."</td>";
-                echo "<td class='text-center'>".$user_data['mental']."</td>";
-                echo "<td class='text-center'>".$user_data['imt']."</td>";
-                echo "<td class='text-center'>".$user_data['tek_darah']."</td>";
-                echo "<td class='text-center'>".$user_data['hb_kurang']."</td>";
-                echo "<td class='text-center'>".$user_data['kolesterol']."</td>";
-                echo "<td class='text-center'>".$user_data['dm']."</td>";
-                echo "<td class='text-center'>".$user_data['asam_urat']."</td>";
-                echo "<td class='text-center'>".$user_data['ginjal']."</td>";
-                echo "<td class='text-center'>".$user_data['kognitif']."</td>";
-                echo "<td class='text-center'>".$user_data['pengelihatan']."</td>";
-                echo "<td class='text-center'>".$user_data['pendengaran']."</td>";
-                echo "<td width='130px;'><button class='btn btn-sm btn-primary' href='edit.php?id=$user_data[id]'>Edit</button> | <form class='d-inline' method='POST' action='core/crud.php'> <input type='hidden' name='id_hapus' value='$user_data[id]'> <input type='submit' name='Delete' value='Delete' class='btn btn-danger btn-sm'></form></td></tr>";        
-                echo "</tr>";
+            ?>
+            
+            <tr>
+               <td class='text-center'><?=$no?></td>
+               <td ><?=$user_data['nama_desa']?></td>
+               <td class='text-center'><?=$user_data['mental']?></td>
+               <td class='text-center'><?=$user_data['imt']?></td>
+               <td class='text-center'><?=$user_data['tek_darah']?></td>
+               <td class='text-center'><?=$user_data['hb_kurang']?></td>
+               <td class='text-center'><?=$user_data['kolesterol']?></td>
+               <td class='text-center'><?=$user_data['dm']?></td>
+               <td class='text-center'><?=$user_data['asam_urat']?></td>
+               <td class='text-center'><?=$user_data['ginjal']?></td>
+               <td class='text-center'><?=$user_data['kognitif']?></td>
+               <td class='text-center'><?=$user_data['pengelihatan']?></td>
+               <td class='text-center'><?=$user_data['pendengaran']?></td>
+               <td width='130px;'><button class='btn btn-sm btn-warning' data-bs-toggle='modal' data-bs-target='#modalEdit<?= $user_data['id']?>'>Edit</button> | <form class='d-inline' method='POST' action='core/crud.php'> <input type='hidden' name='id_hapus' value='<?= $user_data["id"] ?>'> <input type='submit' name='Delete' value='Delete' class='btn btn-danger btn-sm'></form></td>
+                <!-- modal edit data -->
+                <div class="modal fade" id="modalEdit<?= $user_data['id']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <input type="hidden" name="id_edit">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Form Tambah Data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="core/crud.php" method="POST">
+                                <div class="form-group">
+                                    <label for="nama_desa">Nama Desa</label>
+                                    <input type="hidden" value="<?= $user_data['id']?>" name="id_update">
+                                    <input class="form-control form-control-sm" value="<?= $user_data["nama_desa"] ?>" type="text" name="nama_desa">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="mental">Gangguan Mental</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["mental"] ?>" type="number" name="mental">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="imt">IMT</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["imt"] ?>" type="number" name="imt">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="tek_darah">Tekanan Darah</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["tek_darah"] ?>" type="number" name="tek_darah">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="hb_kurang">Hb Kurang</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["hb_kurang"] ?>" type="number" name="hb_kurang">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="kolesterol">Koleseterol</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["kolesterol"] ?>" type="number" name="kolesterol">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="dm">Diabetes Melitus</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["dm"] ?>" type="number" name="dm">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="as_urat">Asam Urat</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["asam_urat"] ?>" type="number" name="as_urat">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="ginjal">Gangguan Ginjal</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["ginjal"] ?>" type="number" name="ginjal">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="kognitif">Gangguan Kognitif</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["kognitif"] ?>" type="number" name="kognitif">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="pengelihatan">Gangguan Pengelihatan</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["pengelihatan"] ?>" type="number" name="pengelihatan">
+                                </div>  
+                                <div class="form-group">
+                                    <label for="pendengaran">Gangguan Pendengaran</label>
+                                    <input class="form-control form-control-sm" value="<?= $user_data["pendengaran"] ?>" type="number" name="pendengaran">
+                                </div>  
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" name="Update" value="Simpan" class="btn btn-success">
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- akhir modal edit data -->
+            </tr>
+            <?php   
                 $no += 1;
-            }
+                }
             ?>
         </table>
     </div>
