@@ -44,7 +44,7 @@ function euclidean_distance($array_data, $centroid){
 }
 
 // fungsi untuk membagi cluster
-function bagi_cluster($jarak1, $jarak2, $jarak3){
+function bagi_cluster($jarak1, $jarak2){
     // print_r($jarak1);
     // print_r($jarak2);
     // print_r($jarak3);
@@ -52,23 +52,19 @@ function bagi_cluster($jarak1, $jarak2, $jarak3){
     $cluster2 = [];
     $cluster3 = [];
     foreach ($jarak1 as $key => $value) {
-        if($jarak1[$key] < $jarak2[$key] and $jarak1[$key] < $jarak3[$key]){
+        if($jarak1[$key] < $jarak2[$key]){
             $cluster1[] = $key;
         }
-        else if($jarak2[$key] < $jarak1[$key] and $jarak2[$key] < $jarak3[$key]){
+        else if($jarak2[$key] < $jarak1[$key]){
             $cluster2[] = $key;
         }
-        else if($jarak3[$key] < $jarak1[$key] and $jarak3[$key] < $jarak2[$key]){
-            $cluster3[] = $key;
-        }
-        else if($jarak1[$key] == $jarak2[$key] or $jarak1[$key] == $jarak3[$key] or $jarak2[$key] == $jarak3[$key]){
+        else if($jarak1[$key] == $jarak2[$key]){
             $cluster1[] = $key;
         }
     }
     return array(
         'cluster1' => $cluster1,
         'cluster2' => $cluster2,
-        'cluster3' => $cluster3,
     );
 }
 
@@ -114,28 +110,26 @@ function hitung_centroid($array_data, $cluster){
 // perhitungan euclidean terhadap seluruh data
 function hitung_kmeans($array_data){
     // menentukan cetroid awal untuk iterasi 1
-    $c1 = 6;
-    $c2 = 8;
-    $c3 = 12;
+    $c1 = 1;
+    $c2 = 2;
 
     // menghitung jarak seluruh data dengan setiap centroid yang telah ditentukan
     $jarak1 = euclidean_distance($array_data, $array_data[$c1]);
     $jarak2 = euclidean_distance($array_data, $array_data[$c2]);
-    $jarak3 = euclidean_distance($array_data, $array_data[$c3]);
 
     
     // membagi cluster
-    $hasil_clustering = bagi_cluster($jarak1, $jarak2, $jarak3);
+    $hasil_clustering = bagi_cluster($jarak1, $jarak2);
 
     // anggota setiap cluster
     $cluster1 = $hasil_clustering['cluster1'];
     $cluster2 = $hasil_clustering['cluster2'];
-    $cluster3 = $hasil_clustering['cluster3'];
 
-    // print_r(['============= iterasi ke 1 =============']);
+    print_r(['============= iterasi ke 1 =============']);
+    print_r($jarak1);
+    print_r($jarak2);
     // print_r($cluster1);
     // print_r($cluster2);
-    // print_r($cluster3);
     
     // iterasi 2 dan seterusnya
     $x = 2;
@@ -144,25 +138,25 @@ function hitung_kmeans($array_data){
         // menghitung centroid baru dengan means (rata-rat)
         $centroid1_baru = hitung_centroid($array_data, $cluster1);
         $centroid2_baru = hitung_centroid($array_data, $cluster2);
-        $centroid3_baru = hitung_centroid($array_data, $cluster3);
     
         // menghtiung jarak cluster dari centroid yang baru
         $jarak1_baru = euclidean_distance($array_data, $centroid1_baru);
         $jarak2_baru = euclidean_distance($array_data, $centroid2_baru);
-        $jarak3_baru = euclidean_distance($array_data, $centroid3_baru);
     
         // membagi cluster lagi
-        $hasil_clustering_baru = bagi_cluster($jarak1_baru, $jarak2_baru, $jarak3_baru);
+        $hasil_clustering_baru = bagi_cluster($jarak1_baru, $jarak2_baru);
     
         // anggota setiap cluster
         $cluster1_baru = $hasil_clustering_baru['cluster1'];
         $cluster2_baru = $hasil_clustering_baru['cluster2'];
-        $cluster3_baru = $hasil_clustering_baru['cluster3'];
 
-        // print_r(['============= iterasi ke' => $x]);
+        print_r(['============= iterasi ke' => $x]);
+        print_r($centroid1_baru);
+        print_r($centroid2_baru);
+        print_r($jarak1_baru);
+        print_r($jarak2_baru);
         // print_r($cluster1_baru);
         // print_r($cluster2_baru);
-        // print_r($cluster3_baru);
         if(($hasil_clustering === $hasil_clustering_baru) != 1){
             $hasil_clustering = $hasil_clustering_baru;
         }
@@ -170,6 +164,8 @@ function hitung_kmeans($array_data){
             break;
         }
         $x += 1;
+        $cluster1 = $cluster1_baru;
+        $cluster2 = $cluster2_baru;
     }
     return $hasil_clustering;
 }
@@ -188,22 +184,19 @@ foreach ($hasil_akhir as $key => $value) {
             $array_cluster[$value1] = 2;
         }
     }
-    else if($key == 'cluster3'){
-        foreach ($value as $key1 => $value1) {
-            $array_cluster[$value1] = 3;
-        }
-    }
 }
 
-// proses update ke database
-foreach ($array_cluster as $id => $cluster) {
-    $result = mysqli_query($mysqli, "UPDATE penyakit SET cluster='$cluster' WHERE id=$id");
-    if(!$result){
-        echo 'error!';
-    }
-}
+print_r($hasil_akhir);
 
-header("Location:../klastering.php");
+// // proses update ke database
+// foreach ($array_cluster as $id => $cluster) {
+//     $result = mysqli_query($mysqli, "UPDATE penyakit SET cluster='$cluster' WHERE id=$id");
+//     if(!$result){
+//         echo 'error!';
+//     }
+// }
+
+// header("Location:../klastering.php");
 ?>
 
 
