@@ -4,7 +4,7 @@
  */
  
 $databaseHost = 'localhost';
-$databaseName = 'cluster_kesehatan';
+$databaseName = 'kesehatan';
 $databaseUsername = 'root';
 $databasePassword = '';
  
