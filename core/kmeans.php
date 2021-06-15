@@ -125,9 +125,9 @@ function hitung_kmeans($array_data){
     $cluster1 = $hasil_clustering['cluster1'];
     $cluster2 = $hasil_clustering['cluster2'];
 
-    print_r(['============= iterasi ke 1 =============']);
-    print_r($jarak1);
-    print_r($jarak2);
+    // print_r(['============= iterasi ke 1 =============']);
+    // print_r($jarak1);
+    // print_r($jarak2);
     // print_r($cluster1);
     // print_r($cluster2);
     
@@ -151,10 +151,10 @@ function hitung_kmeans($array_data){
         $cluster2_baru = $hasil_clustering_baru['cluster2'];
 
         print_r(['============= iterasi ke' => $x]);
-        print_r($centroid1_baru);
-        print_r($centroid2_baru);
-        print_r($jarak1_baru);
-        print_r($jarak2_baru);
+        // print_r($centroid1_baru);
+        // print_r($centroid2_baru);
+        // print_r($jarak1_baru);
+        // print_r($jarak2_baru);
         // print_r($cluster1_baru);
         // print_r($cluster2_baru);
         if(($hasil_clustering === $hasil_clustering_baru) != 1){
@@ -186,17 +186,17 @@ foreach ($hasil_akhir as $key => $value) {
     }
 }
 
-print_r($hasil_akhir);
+// print_r($hasil_akhir);
 
 // // proses update ke database
-// foreach ($array_cluster as $id => $cluster) {
-//     $result = mysqli_query($mysqli, "UPDATE penyakit SET cluster='$cluster' WHERE id=$id");
-//     if(!$result){
-//         echo 'error!';
-//     }
-// }
+foreach ($array_cluster as $id => $cluster) {
+    $result = mysqli_query($mysqli, "UPDATE penyakit SET cluster='$cluster' WHERE id=$id");
+    if(!$result){
+        echo 'error!';
+    }
+}
 
-// header("Location:../klastering.php");
+header("Location:../klastering.php");
 ?>
 
 
